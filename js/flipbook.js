@@ -1,10 +1,9 @@
-// Enhanced flipbook functionality with PDF.js integration
-class PDFFlipbookReader {
+// Single Page PDF Flipbook Reader
+class SinglePageFlipbookReader {
     constructor() {
         this.pdf = null;
-        this.currentSpread = 0; // 0 = cover, 1 = pages 1-2, 2 = pages 3-4, etc.
+        this.currentPage = 1;
         this.totalPages = 0;
-        this.totalSpreads = 0;
         this.isLoading = false;
         this.pages = new Map(); // Store rendered pages
         this.scale = 1.5;
@@ -31,9 +30,8 @@ class PDFFlipbookReader {
             const loadingTask = pdfjsLib.getDocument('assets/pdf/linear-algebra-free-version.pdf');
             this.pdf = await loadingTask.promise;
             this.totalPages = this.pdf.numPages;
-            this.totalSpreads = Math.ceil(this.totalPages / 2);
             
-            console.log(`PDF loaded: ${this.totalPages} pages, ${this.totalSpreads} spreads`);
+            console.log(`PDF loaded: ${this.totalPages} pages`);
             
             await this.initializeFlipbook();
             this.isLoading = false;
@@ -47,22 +45,19 @@ class PDFFlipbookReader {
     }
 
     async initializeFlipbook() {
-        const container = document.querySelector('.book-container');
+        const container = document.querySelector('.page-container');
         container.innerHTML = `
-            <div class="book-spine"></div>
-            <div class="page page-left" id="page-left">
+            <button class="nav-arrow nav-prev" id="nav-prev">‹</button>
+            <div class="page" id="current-page">
                 <div class="page-content"></div>
                 <div class="page-number"></div>
             </div>
-            <div class="page page-right" id="page-right">
-                <div class="page-content"></div>
-                <div class="page-number"></div>
-            </div>
+            <button class="nav-arrow nav-next" id="nav-next">›</button>
             <div class="touch-indicator touch-prev">‹</div>
             <div class="touch-indicator touch-next">›</div>
         `;
 
-        await this.renderCurrentSpread();
+        await this.renderCurrentPage();
     }
 
     async renderPage(pageNum, targetElement) {
@@ -100,43 +95,18 @@ class PDFFlipbookReader {
         }
     }
 
-    async renderCurrentSpread() {
-        const leftPage = document.getElementById('page-left');
-        const rightPage = document.getElementById('page-right');
-        const leftContent = leftPage.querySelector('.page-content');
-        const rightContent = rightPage.querySelector('.page-content');
-        const leftNumber = leftPage.querySelector('.page-number');
-        const rightNumber = rightPage.querySelector('.page-number');
+    async renderCurrentPage() {
+        const pageElement = document.getElementById('current-page');
+        const pageContent = pageElement.querySelector('.page-content');
+        const pageNumber = pageElement.querySelector('.page-number');
 
         // Clear previous content
-        leftContent.innerHTML = '';
-        rightContent.innerHTML = '';
-        leftNumber.textContent = '';
-        rightNumber.textContent = '';
+        pageContent.innerHTML = '';
+        pageNumber.textContent = '';
 
-        if (this.currentSpread === 0) {
-            // Cover page
-            await this.renderPage(1, leftContent);
-            leftNumber.textContent = '1';
-            
-            if (this.totalPages > 1) {
-                await this.renderPage(2, rightContent);
-                rightNumber.textContent = '2';
-            }
-        } else {
-            // Calculate page numbers for current spread
-            const leftPageNum = (this.currentSpread - 1) * 2 + 3; // Start from page 3
-            const rightPageNum = leftPageNum + 1;
-
-            if (leftPageNum <= this.totalPages) {
-                await this.renderPage(leftPageNum, leftContent);
-                leftNumber.textContent = leftPageNum.toString();
-            }
-
-            if (rightPageNum <= this.totalPages) {
-                await this.renderPage(rightPageNum, rightContent);
-                rightNumber.textContent = rightPageNum.toString();
-            }
+        if (this.currentPage <= this.totalPages) {
+            await this.renderPage(this.currentPage, pageContent);
+            pageNumber.textContent = this.currentPage.toString();
         }
     }
 
@@ -147,10 +117,10 @@ class PDFFlipbookReader {
             
             switch(e.key) {
                 case 'ArrowLeft':
-                    this.previousSpread();
+                    this.previousPage();
                     break;
                 case 'ArrowRight':
-                    this.nextSpread();
+                    this.nextPage();
                     break;
                 case 'Escape':
                     closeFlipbook();
@@ -170,32 +140,36 @@ class PDFFlipbookReader {
             this.handleSwipe();
         }, { passive: true });
 
-        // Mouse navigation on book area
+        // Navigation arrows
         document.addEventListener('click', (e) => {
-            if (!this.isModalOpen()) return;
-            
-            const bookContainer = document.querySelector('.book-container');
-            if (!bookContainer || !bookContainer.contains(e.target)) return;
-
-            const rect = bookContainer.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const centerX = rect.width / 2;
-
-            if (x < centerX - 50) {
-                this.previousSpread();
-                this.showTouchIndicator('prev');
-            } else if (x > centerX + 50) {
-                this.nextSpread();
-                this.showTouchIndicator('next');
+            if (e.target.id === 'nav-prev') {
+                this.previousPage();
+            } else if (e.target.id === 'nav-next') {
+                this.nextPage();
+            } else if (e.target.id === 'prev-page') {
+                this.previousPage();
+            } else if (e.target.id === 'next-page') {
+                this.nextPage();
             }
         });
 
-        // Control buttons
+        // Click on page area for navigation
         document.addEventListener('click', (e) => {
-            if (e.target.id === 'prev-spread') {
-                this.previousSpread();
-            } else if (e.target.id === 'next-spread') {
-                this.nextSpread();
+            if (!this.isModalOpen()) return;
+            
+            const pageElement = document.getElementById('current-page');
+            if (!pageElement || !pageElement.contains(e.target)) return;
+
+            const rect = pageElement.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const centerX = rect.width / 2;
+
+            if (x < centerX) {
+                this.previousPage();
+                this.showTouchIndicator('prev');
+            } else {
+                this.nextPage();
+                this.showTouchIndicator('next');
             }
         });
     }
@@ -205,49 +179,48 @@ class PDFFlipbookReader {
         
         if (Math.abs(diff) > this.touchThreshold) {
             if (diff > 0) {
-                // Swipe left - next spread
-                this.nextSpread();
+                // Swipe left - next page
+                this.nextPage();
                 this.showTouchIndicator('next');
             } else {
-                // Swipe right - previous spread
-                this.previousSpread();
+                // Swipe right - previous page
+                this.previousPage();
                 this.showTouchIndicator('prev');
             }
         }
     }
 
-    async nextSpread() {
-        if (this.currentSpread < this.totalSpreads && !this.isLoading) {
+    async nextPage() {
+        if (this.currentPage < this.totalPages && !this.isLoading) {
             this.animatePageFlip('next');
-            this.currentSpread++;
-            await this.renderCurrentSpread();
+            this.currentPage++;
+            await this.renderCurrentPage();
             this.updateControls();
         }
     }
 
-    async previousSpread() {
-        if (this.currentSpread > 0 && !this.isLoading) {
+    async previousPage() {
+        if (this.currentPage > 1 && !this.isLoading) {
             this.animatePageFlip('prev');
-            this.currentSpread--;
-            await this.renderCurrentSpread();
+            this.currentPage--;
+            await this.renderCurrentPage();
             this.updateControls();
         }
     }
 
     animatePageFlip(direction) {
-        const rightPage = document.getElementById('page-right');
-        const leftPage = document.getElementById('page-left');
+        const pageElement = document.getElementById('current-page');
         
         if (direction === 'next') {
-            rightPage.classList.add('flipping-right');
+            pageElement.classList.add('flipping-next');
             setTimeout(() => {
-                rightPage.classList.remove('flipping-right');
-            }, 800);
+                pageElement.classList.remove('flipping-next');
+            }, 600);
         } else {
-            leftPage.classList.add('flipping-left');
+            pageElement.classList.add('flipping-prev');
             setTimeout(() => {
-                leftPage.classList.remove('flipping-left');
-            }, 800);
+                pageElement.classList.remove('flipping-prev');
+            }, 600);
         }
     }
 
@@ -262,26 +235,29 @@ class PDFFlipbookReader {
     }
 
     updateControls() {
-        const prevBtn = document.getElementById('prev-spread');
-        const nextBtn = document.getElementById('next-spread');
+        const prevBtn = document.getElementById('nav-prev');
+        const nextBtn = document.getElementById('nav-next');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
         const pageInfo = document.getElementById('page-info');
 
-        if (prevBtn) prevBtn.disabled = this.currentSpread === 0;
-        if (nextBtn) nextBtn.disabled = this.currentSpread >= this.totalSpreads;
+        if (prevBtn) prevBtn.disabled = this.currentPage === 1;
+        if (nextBtn) nextBtn.disabled = this.currentPage >= this.totalPages;
+        if (prevPageBtn) prevPageBtn.disabled = this.currentPage === 1;
+        if (nextPageBtn) nextPageBtn.disabled = this.currentPage >= this.totalPages;
 
         if (pageInfo) {
-            const currentPageStart = this.currentSpread === 0 ? 1 : (this.currentSpread - 1) * 2 + 3;
-            const currentPageEnd = Math.min(currentPageStart + 1, this.totalPages);
-            pageInfo.textContent = `Halaman ${currentPageStart}${currentPageEnd > currentPageStart ? `-${currentPageEnd}` : ''} dari ${this.totalPages}`;
+            pageInfo.textContent = `Halaman ${this.currentPage} dari ${this.totalPages}`;
         }
     }
 
     showLoading() {
-        const container = document.querySelector('.book-container');
+        const container = document.querySelector('.page-container');
         if (container) {
             container.innerHTML = `
                 <div class="loading-page">
                     <div class="loading-spinner"></div>
+                    <p>Memuat PDF...</p>
                 </div>
             `;
         }
@@ -292,7 +268,7 @@ class PDFFlipbookReader {
     }
 
     showError(message) {
-        const container = document.querySelector('.book-container');
+        const container = document.querySelector('.page-container');
         if (container) {
             container.innerHTML = `
                 <div class="loading-page">
@@ -321,7 +297,7 @@ class PDFFlipbookReader {
 // Initialize flipbook reader
 let flipbookReader;
 
-// Enhanced modal functions
+// Modal functions
 function openFlipbook() {
     const modal = document.getElementById('flipbook-modal');
     if (modal) {
@@ -330,7 +306,7 @@ function openFlipbook() {
         
         // Initialize flipbook reader if not already done
         if (!flipbookReader) {
-            flipbookReader = new PDFFlipbookReader();
+            flipbookReader = new SinglePageFlipbookReader();
         }
     }
 }
