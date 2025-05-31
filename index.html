@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Friendly Introduction to Linear Algebra - Versi Gratis</title>
+    <meta name="description" content="Belajar Aljabar Linear dengan Cara yang Berbeda - Buku karya Alwin (UI) & Sahira Almahira Kannajmi (UGM)">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/flipbook.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2>Linear Algebra</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#authors">Penulis</a></li>
+                <li><a href="#book">Tentang Buku</a></li>
+                <li><a href="#chapters">Bab</a></li>
+                <li><a href="#contact">Kontak</a></li>
+            </ul>
+            <button class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="book-showcase">
+                    <div class="book-3d" id="main-book">
+                        <div class="book-cover">
+                            <div class="cover-content">
+                                <h1 class="book-title">A Friendly<br>Introduction to<br>Linear Algebra</h1>
+                                <p class="book-subtitle">Belajar Aljabar Linear dengan Cara yang Berbeda</p>
+                                <div class="authors-line">
+                                    <span>Alwin & Sahira Almahira Kannajmi</span>
+                                </div>
+                                <div class="collaboration">
+                                    <small>Kolaborasi UI × UGM</small>
+                                </div>
+                                <div class="version-badge">VERSI GRATIS</div>
+                            </div>
+                        </div>
+                        <div class="book-spine"></div>
+                        <div class="book-pages"></div>
+                    </div>
+                </div>
+                
+                <div class="hero-text">
+                    <h2 class="main-heading">Jelajahi Dunia Aljabar Linear</h2>
+                    <p class="main-description">Sebuah pendekatan yang ramah dan intuitif untuk memahami konsep fundamental aljabar linear. Dari sistem persamaan hingga transformasi, belajar matematika dengan cara yang menyenangkan!</p>
+                    
+                    <div class="book-features">
+                        <div class="feature">
+                            <img src="assets/images/icons/chapter.svg" alt="Chapters" class="feature-icon">
+                            <span>5 Bab Pembuka</span>
+                        </div>
+                        <div class="feature">
+                            <img src="assets/images/icons/download.svg" alt="Free" class="feature-icon">
+                            <span>Gratis untuk Dibaca</span>
+                        </div>
+                        <div class="feature">
+                            <img src="assets/images/icons/university.svg" alt="University" class="feature-icon">
+                            <span>Kolaborasi UI × UGM</span>
+                        </div>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary" onclick="openFlipbook()">
+                            <img src="assets/images/icons/book.svg" alt="">
+                            Baca Sekarang
+                        </button>
+                        <button class="btn btn-secondary" onclick="scrollToContact()">
+                            Dapatkan Versi Lengkap
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Authors Section -->
+    <section id="authors" class="authors-section">
+        <div class="container">
+            <h2 class="section-title">Tentang Penulis</h2>
+            <p class="section-subtitle">Kolaborasi hahUHUEHWWeuhw</p>
+            
+            <div class="authors-grid">
+                <div class="author-card">
+                    <div class="author-photo">
+                        <img src="assets/images/alwin-photo.jpg" alt="Alwin" class="author-image">
+                        <div class="author-overlay">
+                            <img src="assets/images/icons/university.svg" alt="UI" class="university-icon">
+                        </div>
+                    </div>
+                    <div class="author-info">
+                        <h3>Alwin</h3>
+                        <p class="author-affiliation">Universitas Indonesia</p>
+                        <p class="author-location">Depok, Indonesia</p>
+                        <p class="author-email">alwinnear@gmail.com</p>
+                        <p class="author-description">Bisa jadi apa aja, Triple Major; Med, Cs, Math; also minoring in economics and mechatronics.</p>
+                    </div>
+                </div>
+
+                <div class="author-card">
+                    <div class="author-photo">
+                        <img src="assets/images/sahira-photo.jpg" alt="Sahira Almahira Kannajmi" class="author-image">
+                        <div class="author-overlay">
+                            <img src="assets/images/icons/university.svg" alt="UGM" class="university-icon">
+                        </div>
+                    </div>
+                    <div class="author-info">
+                        <h3>Sahira Almahira Kannajmi</h3>
+                        <p class="author-affiliation">Universitas Gadjah Mada</p>
+                        <p class="author-location">D.I. Yogyakarta, Indonesia</p>
+                        <p class="author-email">almahira.sahira0123@gmail.com</p>
+                        <p class="author-description">Skor UTBK 2024; PK 1000, PM 997, asli sepuh.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collaboration-story">
+                <h3>Tentang Kolaborasi</h3>
+                <p>Buku ini merupakan hasil kolaborasi untuk memberikan pembelajaran Aljabar Linear yang lebih mudah dipahami. Kombinasi perspektif dari Universitas Indonesia dan Universitas Gadjah Mada menciptakan pendekatan yang komprehensif dan beragam dalam menyampaikan konsep matematis yang kompleks.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Book Overview Section -->
+    <section id="book" class="book-overview">
+        <div class="container">
+            <div class="overview-content">
+                <div class="overview-text">
+                    <h2>Tentang Buku Ini</h2>
+                    <p><strong>"A Friendly Introduction to Linear Algebra"</strong> adalah panduan komprehensif yang dirancang khusus untuk mahasiswa dan pembelajar mandiri yang ingin memahami aljabar linear dari dasar dengan pendekatan yang ramah dan intuitif.</p>
+                    
+                    <div class="book-philosophy">
+                        <h4>🎯 Filosofi Buku</h4>
+                        <p>"Matematika adalah cerita, bukan deretan simbol yang menakutkan. Setiap konsep dimulai dari pertanyaan sederhana, visualisasi yang jelas, dan contoh-contoh kehidupan sehari-hari."</p>
+                    </div>
+
+                    <div class="book-highlights">
+                        <div class="highlight">
+                            <h4>📚 Pendekatan Sistematis</h4>
+                            <p>Konsep dijelaskan step-by-step dengan intuisi terlebih dahulu, kemudian dikembangkan menjadi pemahaman yang kuat dan aplikatif</p>
+                        </div>
+                        <div class="highlight">
+                            <h4>🎯 Bahasa yang Ramah</h4>
+                            <p>Menggunakan analogi dan visualisasi untuk membuat konsep abstrak menjadi konkret dan mudah dipahami</p>
+                        </div>
+                        <div class="highlight">
+                            <h4>💡 Aplikasi Praktis</h4>
+                            <p>Menunjukkan penggunaan aljabar linear dalam kehidupan sehari-hari, dari gambar digital hingga kecerdasan buatan</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="version-info">
+                    <div class="free-version-card">
+                        <h3>🎁 Versi Gratis</h3>
+                        <p>Berisi 5 bab pembuka dari buku lengkap. Anda bisa merasakan kualitas dan gaya penulisan sebelum memutuskan membeli versi lengkap.</p>
+                        
+                        <div class="version-comparison">
+                            <div class="version-item free">
+                                <h4>Versi Gratis</h4>
+                                <ul>
+                                    <li>5 Bab Pembuka</li>
+                                    <li>Konsep Dasar</li>
+                                    <li>Contoh Aplikasi</li>
+                                </ul>
+                            </div>
+                            <div class="version-item full">
+                                <h4>Versi Lengkap</h4>
+                                <ul>
+                                    <li>10 Bab Komprehensif</li>
+                                    <li>Latihan & Proyek</li>
+                                    <li>Aplikasi Mendalam</li>
+                                    <li>Soal Tantangan</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapters Section -->
+    <section id="chapters" class="chapters-section">
+        <div class="container">
+            <h2 class="section-title">Bab yang Tersedia (Versi Gratis)</h2>
+            <p class="section-subtitle">5 bab pembuka yang akan membangun fondasi pemahaman Anda</p>
+            
+            <div class="chapters-grid">
+                <div class="chapter-card">
+                    <div class="chapter-number">01</div>
+                    <div class="chapter-content">
+                        <h3>Mengapa Aljabar Linear?</h3>
+                        <p>Pengenalan pentingnya aljabar linear dalam kehidupan sehari-hari, dari gambar digital hingga sistem persamaan sederhana.</p>
+                        <div class="chapter-topics">
+                            <span class="topic">Gambar Digital</span>
+                            <span class="topic">Sistem Persamaan</span>
+                            <span class="topic">Aplikasi Nyata</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chapter-card">
+                    <div class="chapter-number">02</div>
+                    <div class="chapter-content">
+                        <h3>Vektor - Besar dan Arah</h3>
+                        <p>Memahami konsep vektor sebagai "panah ajaib" dengan besar dan arah, serta operasi-operasi dasarnya.</p>
+                        <div class="chapter-topics">
+                            <span class="topic">Konsep Vektor</span>
+                            <span class="topic">Operasi Vektor</span>
+                            <span class="topic">Koordinat 2D</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chapter-card">
+                    <div class="chapter-number">03</div>
+                    <div class="chapter-content">
+                        <h3>Ruang Vektor - Span dan Basis</h3>
+                        <p>Menjelajahi konsep span, kombinasi linear, kebebasan linear, dan basis ruang vektor dengan pendekatan intuitif.</p>
+                        <div class="chapter-topics">
+                            <span class="topic">Span</span>
+                            <span class="topic">Kombinasi Linear</span>
+                            <span class="topic">Basis</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chapter-card">
+                    <div class="chapter-number">04</div>
+                    <div class="chapter-content">
+                        <h3>Sistem Persamaan dan Matriks</h3>
+                        <p>Dari cerita sehari-hari ke sistem persamaan linear, kemudian memperkenalkan matriks sebagai cara rapi menuliskannya.</p>
+                        <div class="chapter-topics">
+                            <span class="topic">Pemodelan SPL</span>
+                            <span class="topic">Notasi Matriks</span>
+                            <span class="topic">Matriks Augmented</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chapter-card">
+                    <div class="chapter-number">05</div>
+                    <div class="chapter-content">
+                        <h3>Operasi Baris Elementer & Eliminasi Gauss</h3>
+                        <p>Teknik-teknik sistematis untuk menyelesaikan sistem persamaan linear menggunakan "jurus-jurus sakti" OBE.</p>
+                        <div class="chapter-topics">
+                            <span class="topic">Operasi Baris</span>
+                            <span class="topic">Eliminasi Gauss</span>
+                            <span class="topic">Substitusi Balik</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="quote-section">
+        <div class="container">
+            <div class="quote-container">
+                <img src="assets/images/icons/quote.svg" alt="Quote" class="quote-icon">
+                <blockquote class="main-quote">
+                    "Matematika bukan tentang angka, persamaan, komputasi, atau algoritma: matematika adalah tentang pemahaman."
+                </blockquote>
+                <cite class="quote-author">— William Paul Thurston</cite>
+                
+                <div class="book-quote">
+                    <p class="book-quote-text">"Kami menulis bukan karena kami tahu banyak - tapi karena kami ingin menyederhanakan apa yang sulit, agar kamu tidak perlu merasa sendirian saat belajar :)"</p>
+                    <cite class="book-quote-author">— Alwin & Sahira</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-content">
+                <h2>Ingin Versi Lengkap?</h2>
+                <p>Dapatkan akses ke seluruh 10 bab dengan pembahasan mendalam, latihan soal lengkap, proyek kreatif, dan aplikasi praktis aljabar linear dalam berbagai bidang.</p>
+                
+                <div class="full-version-features">
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <h4>📖 10 Bab Lengkap</h4>
+                            <p>Dari dasar hingga aplikasi lanjutan</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>🎯 Latihan Intensif</h4>
+                            <p>Soal-soal dari dasar hingga tantangan</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>🚀 Proyek Kreatif</h4>
+                            <p>Aplikasi praktis dan menyenangkan</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>💡 Aplikasi Nyata</h4>
+                            <p>Dari AI hingga grafik komputer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <img src="assets/images/icons/instagram.svg" alt="Instagram" class="contact-icon">
+                        <div class="contact-details">
+                            <h4>Instagram</h4>
+                            <a href="https://instagram.com/virellith" target="_blank">@virellith</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <img src="assets/images/icons/email.svg" alt="Email" class="contact-icon">
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <a href="mailto:alwinnear@gmail.com">alwinnear@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flipbook Modal -->
+    <div class="flipbook-modal" id="flipbook-modal">
+        <div class="modal-overlay" onclick="closeFlipbook()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>A Friendly Introduction to Linear Algebra</h3>
+                <button class="close-btn" onclick="closeFlipbook()">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="flipbook-container">
+                <div class="flipbook-viewer" id="flipbook-viewer">
+                    <iframe src="assets/pdf/linear-algebra-free-version.pdf" width="100%" height="100%"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <h3>A Friendly Introduction to Linear Algebra</h3>
+                    <p>Hasil Kolaborasi UI x UGM</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Penulis</h4>
+                        <p>Alwin (Universitas Indonesia)</p>
+                        <p>Sahira (Universitas Gadjah Mada)</p>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Kontak</h4>
+                        <p>@virellith [Instagram]</p>
+                        <p>alwinnear@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+    <p>&copy; 2024 Alwin & Sahira. MIT Computing x Harvard Medical School (in the planning stages)</p>
+        </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/flipbook.js"></script>
+</body>
+</html>
