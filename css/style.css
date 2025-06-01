@@ -1223,4 +1223,18 @@ body {
     .nav-toggle.active span:nth-child(3) {
         transform: rotate(45deg) translate(-5px, -6px);
     }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-primary img {
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+        vertical-align: middle;
+    }
+
 }
