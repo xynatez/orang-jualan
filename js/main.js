@@ -225,6 +225,17 @@ function hideLoading() {
     }
 }
 
+function downloadBook() {
+    // Replace with your actual PDF file path
+    const pdfUrl = 'assets/pdf/linear-algebra-free-version.pdf';
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.download = 'A-Friendly-Introduction-to-Linear-Algebra-Free.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 // Enhanced mobile experience
 function initMobileOptimizations() {
     // Touch-friendly interactions
